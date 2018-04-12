@@ -1,0 +1,27 @@
+server:
+  port: 9000
+  tomcat:
+    max-threads: 24
+logging:
+  level:
+    root: DEBUG
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/gudderidb?useUnicode=true&zeroDateTimeBehavior=convertToNull&noAccessToProcedureBodies=true&connectionCollation=utf8mb4_general_ci&dumpQueriesOnException=true
+    username: root
+    password: root
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 10
+      connection-timeout: 3000
+#security:
+#  oauth2:
+#    client:
+#      client-id: testjwtclientid
+#      client-secret: "{noop}CLIENT_SECRET"
+#      scope: read,write
+#      resource-ids: testjwtresourceid
+#      authorized-grant-types: password,refresh_token
+#      auto-approve-scopes: '.*'
+#      access-token-validity-seconds: 900    # 15min
+#      refresh-token-validity-seconds: 1800  # 30min
