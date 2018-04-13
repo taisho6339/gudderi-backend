@@ -1,0 +1,19 @@
+version: '2'
+volumes:
+  db-data:
+
+services:
+  gudderi_db:
+    image: mysql:5.7.21
+    volumes:
+      - db-data:/var/lib/mysql
+      - $PWD/db/etc/mysql/conf.d:/etc/mysql/conf.d
+      - $PWD/db/init.d:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: gudderidb
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: gudderi
+      MYSQL_PASSWORD: gudderi
+    command: --transaction-isolation=REPEATABLE-READ
