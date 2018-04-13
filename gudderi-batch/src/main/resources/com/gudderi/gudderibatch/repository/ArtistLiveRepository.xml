@@ -41,7 +41,7 @@
             (
                 #{liveId},
                 #{liveSchedule.livePlace},
-                0,
+                #{liveSchedule.livePrefecture.code},
                 #{liveSchedule.liveDate}
             )
     </insert>

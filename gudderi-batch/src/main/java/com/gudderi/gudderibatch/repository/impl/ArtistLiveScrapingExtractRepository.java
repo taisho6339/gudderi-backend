@@ -3,6 +3,7 @@ package com.gudderi.gudderibatch.repository.impl;
 import com.gudderi.gudderibatch.domain.Artist;
 import com.gudderi.gudderibatch.domain.Live;
 import com.gudderi.gudderibatch.domain.LiveSchedule;
+import com.gudderi.gudderibatch.enums.Prefecture;
 import com.gudderi.gudderibatch.repository.ArtistLiveExtractRepository;
 import com.gudderi.gudderibatch.utils.DomUtils;
 
@@ -141,15 +142,22 @@ public class ArtistLiveScrapingExtractRepository implements ArtistLiveExtractRep
                 .get(0)
                 .getElementsByAttributeValue("itemprop", "address")
                 .attr("content");
+
         Matcher matcher = PREFECTURE_PATTERN.matcher(livePrefectureContent);
-        if (matcher.find()) {
-            return LiveSchedule.builder()
-                    .livePrefecture(matcher.group(1))
-                    .livePlace(livePlace)
-                    .liveDate(liveDate)
-                    .build();
+        if (!matcher.find()) {
+            return null;
         }
-        return null;
+
+        Prefecture livePrefecture = Prefecture.findByLabel(matcher.group(1));
+        if (livePrefecture == null) {
+            return null;
+        }
+
+        return LiveSchedule.builder()
+                .livePrefecture(livePrefecture)
+                .livePlace(livePlace)
+                .liveDate(liveDate)
+                .build();
     }
 
     @AllArgsConstructor
