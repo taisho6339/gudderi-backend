@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 @Builder
 public class Artist {
+    private int artistId;
     private String artistName;
     private List<Live> liveList;
 }

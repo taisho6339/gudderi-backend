@@ -13,11 +13,11 @@ import java.util.Date;
 public interface ArtistLiveRepository {
     Integer selectArtistId(@Param("artistName") String artistName);
 
-    Integer insertArtist(@Param("artist") Artist artist);
+    void insertArtist(@Param("artist") Artist artist);
 
     Integer selectLiveId(@Param("liveName") String liveName);
 
-    Integer insertLive(@Param("artistId") Integer artistId, @Param("live") Live live);
+    void insertLive(@Param("artistId") Integer artistId, @Param("live") Live live);
 
     boolean existsLiveSchedule(@Param("liveId") Integer liveId, @Param("liveDate") Date liveDate);
 

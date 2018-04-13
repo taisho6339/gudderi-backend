@@ -11,8 +11,7 @@
             artistName = #{artistName}
     </select>
 
-
-    <insert id="insertArtist" parameterType="com.gudderi.gudderibatch.domain.Artist">
+    <insert id="insertArtist">
         INSERT INTO Artist (
             artistName,
             createdAt
@@ -22,34 +21,34 @@
             #{artist.artistName},
             #{_now}
         )
-        <selectKey resultType="java.lang.Integer" keyProperty="artistId" order="AFTER">
-            SELECT artistId AS artistId FROM Artist WHERE artistName = #{artist.artistName}
+        <selectKey resultType="int" keyProperty="artist.artistId" order="AFTER">
+            SELECT LAST_INSERT_ID() AS artistId
         </selectKey>
     </insert>
 
      <select id="selectLiveId" resultType="java.lang.Integer">
-                SELECT
-                    liveId
-                FROM
-                    Live
-                WHERE
-                    liveName = #{liveName}
+        SELECT
+            liveId
+        FROM
+            Live
+        WHERE
+            liveName = #{liveName}
      </select>
 
     <insert id="insertLive" parameterType="com.gudderi.gudderibatch.domain.Live">
         INSERT INTO Live (
-            liveName,
             artistId,
+            liveName,
             createdAt
         )
         VALUES
         (
-            #{live.liveName},
             #{artistId},
+            #{live.liveName},
             #{_now}
         )
-        <selectKey resultType="java.lang.Integer" keyProperty="liveId" order="AFTER">
-            SELECT liveId AS liveId FROM Live WHERE liveName = #{live.liveName} AND artistId = #{artistId}
+        <selectKey resultType="int" keyProperty="live.liveId" order="AFTER">
+            SELECT LAST_INSERT_ID() AS liveId
         </selectKey>
     </insert>
 
@@ -68,16 +67,16 @@
     <insert id="insertLiveSchedule" parameterType="com.gudderi.gudderibatch.domain.LiveSchedule">
             INSERT INTO LiveSchedule (
                 liveId,
-                livePlace,
                 livePrefectureCode,
+                livePlace,
                 liveDate,
                 createdAt
             )
             VALUES
             (
                 #{liveId},
-                #{liveSchedule.livePlace},
                 #{liveSchedule.livePrefecture.code},
+                #{liveSchedule.livePlace},
                 #{liveSchedule.liveDate},
                 #{_now}
             )

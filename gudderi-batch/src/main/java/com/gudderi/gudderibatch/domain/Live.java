@@ -9,6 +9,7 @@ import lombok.Data;
 @Builder
 @Data
 public class Live {
+    private int liveId;
     private String liveName;
     private List<LiveSchedule> liveScheduleList;
 }

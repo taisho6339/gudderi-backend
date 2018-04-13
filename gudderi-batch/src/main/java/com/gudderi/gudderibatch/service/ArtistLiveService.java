@@ -71,7 +71,8 @@ public class ArtistLiveService {
     private Integer insertArtistIfNeeded(Artist artist) {
         Integer artistId = artistLiveRepository.selectArtistId(artist.getArtistName());
         if (artistId == null) {
-            artistId = artistLiveRepository.insertArtist(artist);
+            artistLiveRepository.insertArtist(artist);
+            artistId = artist.getArtistId();
         }
         return artistId;
     }
@@ -79,7 +80,8 @@ public class ArtistLiveService {
     private Integer insertLiveIfNeeded(int artistId, Live live) {
         Integer liveId = artistLiveRepository.selectLiveId(live.getLiveName());
         if (liveId == null) {
-            liveId = artistLiveRepository.insertLive(artistId, live);
+            artistLiveRepository.insertLive(artistId, live);
+            liveId = live.getLiveId();
         }
         return liveId;
     }
