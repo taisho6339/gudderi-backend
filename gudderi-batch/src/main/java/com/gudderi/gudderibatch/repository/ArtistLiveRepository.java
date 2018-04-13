@@ -7,11 +7,19 @@ import com.gudderi.gudderibatch.domain.LiveSchedule;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
+
 @Mapper
 public interface ArtistLiveRepository {
-    int insertArtist(@Param("artist") Artist artist);
+    Integer selectArtistId(@Param("artistName") String artistName);
 
-    int insertLive(@Param("artistId") Integer artistId, @Param("live") Live live);
+    Integer insertArtist(@Param("artist") Artist artist);
+
+    Integer selectLiveId(@Param("liveName") String liveName);
+
+    Integer insertLive(@Param("artistId") Integer artistId, @Param("live") Live live);
+
+    boolean existsLiveSchedule(@Param("liveId") Integer liveId, @Param("liveDate") Date liveDate);
 
     void insertLiveSchedule(@Param("liveId") Integer liveId, @Param("liveSchedule") LiveSchedule liveSchedule);
 }

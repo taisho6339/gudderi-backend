@@ -4,6 +4,7 @@ import com.gudderi.gudderibatch.component.Transactor;
 import com.gudderi.gudderibatch.domain.Artist;
 import com.gudderi.gudderibatch.domain.Live;
 import com.gudderi.gudderibatch.domain.LiveSchedule;
+import com.gudderi.gudderibatch.enums.Prefecture;
 import com.gudderi.gudderibatch.repository.ArtistLiveExtractRepository;
 import com.gudderi.gudderibatch.repository.ArtistLiveRepository;
 
@@ -31,12 +32,15 @@ public class ArtistLiveService {
         this.transactor = transactor;
     }
 
+    /**
+     * アーティストの情報も頻繁に変わるので毎回作り直す
+     */
     public void setUpArtistLiveData() {
 //        List<Artist> artists = artistLiveExtractRepository.getArtistLiveList();
         LiveSchedule liveSchedule = LiveSchedule.builder()
-                .liveDate(new Date())
+                .liveDate(new Date(0))
                 .livePlace("高円寺")
-                .livePrefecture("東京都")
+                .livePrefecture(Prefecture.TOKYO)
                 .build();
         Live live = Live.builder()
                 .liveName("ダミーライブ")
@@ -52,13 +56,39 @@ public class ArtistLiveService {
         });
     }
 
+    // 1トランザクションでinsertを大量に発行しているので、
+    // パフォーマンスが考慮しなければならない分量になったら要チューニング
     private void commitArtistTransaction(Artist artist) {
-        int artistId = artistLiveRepository.insertArtist(artist);
+        int artistId = insertArtistIfNeeded(artist);
         artist.getLiveList().forEach(live -> {
-            int liveId = artistLiveRepository.insertLive(artistId, live);
+            int liveId = insertLiveIfNeeded(artistId, live);
             live.getLiveScheduleList().forEach(liveSchedule -> {
-                artistLiveRepository.insertLiveSchedule(liveId, liveSchedule);
+                insertLiveScheduleIfNeeded(liveId, liveSchedule);
             });
         });
+    }
+
+    private Integer insertArtistIfNeeded(Artist artist) {
+        Integer artistId = artistLiveRepository.selectArtistId(artist.getArtistName());
+        if (artistId == null) {
+            artistId = artistLiveRepository.insertArtist(artist);
+        }
+        return artistId;
+    }
+
+    private Integer insertLiveIfNeeded(int artistId, Live live) {
+        Integer liveId = artistLiveRepository.selectLiveId(live.getLiveName());
+        if (liveId == null) {
+            liveId = artistLiveRepository.insertLive(artistId, live);
+        }
+        return liveId;
+    }
+
+    private void insertLiveScheduleIfNeeded(int liveId, LiveSchedule liveSchedule) {
+        boolean exists = artistLiveRepository.existsLiveSchedule(liveId, liveSchedule.getLiveDate());
+        if (exists) {
+            return;
+        }
+        artistLiveRepository.insertLiveSchedule(liveId, liveSchedule);
     }
 }
