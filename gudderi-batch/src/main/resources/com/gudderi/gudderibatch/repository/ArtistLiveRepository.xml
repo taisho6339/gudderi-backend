@@ -14,14 +14,16 @@
 
     <insert id="insertArtist" parameterType="com.gudderi.gudderibatch.domain.Artist">
         INSERT INTO Artist (
-            artistName
+            artistName,
+            createdAt
         )
         VALUES
         (
-            #{artist.artistName}
+            #{artist.artistName},
+            #{_now}
         )
         <selectKey resultType="java.lang.Integer" keyProperty="artistId" order="AFTER">
-            SELECT LAST_INSERT_ID() AS artistId
+            SELECT artistId AS artistId FROM Artist WHERE artistName = #{artist.artistName}
         </selectKey>
     </insert>
 
@@ -37,15 +39,17 @@
     <insert id="insertLive" parameterType="com.gudderi.gudderibatch.domain.Live">
         INSERT INTO Live (
             liveName,
-            artistId
+            artistId,
+            createdAt
         )
         VALUES
         (
             #{live.liveName},
-            #{artistId}
+            #{artistId},
+            #{_now}
         )
         <selectKey resultType="java.lang.Integer" keyProperty="liveId" order="AFTER">
-            SELECT LAST_INSERT_ID() AS liveId
+            SELECT liveId AS liveId FROM Live WHERE liveName = #{live.liveName} AND artistId = #{artistId}
         </selectKey>
     </insert>
 
@@ -66,14 +70,16 @@
                 liveId,
                 livePlace,
                 livePrefectureCode,
-                liveDate
+                liveDate,
+                createdAt
             )
             VALUES
             (
                 #{liveId},
                 #{liveSchedule.livePlace},
                 #{liveSchedule.livePrefecture.code},
-                #{liveSchedule.liveDate}
+                #{liveSchedule.liveDate},
+                #{_now}
             )
     </insert>
 </mapper>
