@@ -15,7 +15,7 @@ public interface ArtistLiveRepository {
 
     void insertArtist(@Param("artist") Artist artist);
 
-    Integer selectLiveId(@Param("liveName") String liveName);
+    Integer selectLiveId(@Param("artistId") int artistId, @Param("liveName") String liveName);
 
     void insertLive(@Param("artistId") Integer artistId, @Param("live") Live live);
 

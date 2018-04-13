@@ -61,7 +61,7 @@ public class ArtistLiveService {
     }
 
     private Integer insertLiveIfNeeded(int artistId, Live live) {
-        Integer liveId = artistLiveRepository.selectLiveId(live.getLiveName());
+        Integer liveId = artistLiveRepository.selectLiveId(artistId, live.getLiveName());
         if (liveId == null) {
             artistLiveRepository.insertLive(artistId, live);
             liveId = live.getLiveId();

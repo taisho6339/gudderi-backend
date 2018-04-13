@@ -57,15 +57,16 @@ public enum Prefecture {
     OITA(44, "大分県"),
     MIYAZAKI(45, "宮崎県"),
     KAGOSHIMA(46, "鹿児島県"),
-    OKINAWA(47, "沖縄県");
+    OKINAWA(47, "沖縄県"),
+    UNKNOWN(48, "未設定");
 
     public static Prefecture findByLabel(String label) {
         for (Prefecture prefecture : Prefecture.values()) {
-            if (StringUtils.equals(prefecture.getLabel(), label)) {
+            if (StringUtils.contains(prefecture.getLabel(), label)) {
                 return prefecture;
             }
         }
-        return null;
+        return Prefecture.UNKNOWN;
     }
 
     private Integer code;

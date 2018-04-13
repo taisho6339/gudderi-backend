@@ -32,7 +32,8 @@
         FROM
             Live
         WHERE
-            liveName = #{liveName}
+            artistId = #{artistId}
+        AND liveName = #{liveName}
      </select>
 
     <insert id="insertLive" parameterType="com.gudderi.gudderibatch.domain.Live">

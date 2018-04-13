@@ -34,7 +34,7 @@ public class ArtistLiveScrapingExtractRepository implements ArtistLiveExtractRep
     private static final String SOURCE_URL = ROOT_URL + "/category/johnnys-concert-list";
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
-    private static final Pattern PREFECTURE_PATTERN = Pattern.compile("(.*[都|道|府|県]).*");
+    private static final Pattern PREFECTURE_PATTERN = Pattern.compile(".*[0-9]{1,2}:[0-9]{1,2} (.*)");
 
     @Override
     public List<Artist> getArtistLiveList() {
@@ -55,13 +55,8 @@ public class ArtistLiveScrapingExtractRepository implements ArtistLiveExtractRep
             return null;
         }
 
-        Elements elements = document.getElementsByClass(
-                "first"
-        );
-        elements.addAll(
-                document.getElementsByClass("second")
-        );
-
+        Element listElement = document.getElementsByClass("listing_box").get(0);
+        Elements elements = listElement.getElementsByTag("li");
         return elements.stream().map(element -> {
             String artistName = element.getElementsByClass("alt_list__inner_hitarea_p").get(0).childNode(0).outerHtml();
             String detailLink = element.getElementsByTag("a").get(0).attr("href");
@@ -80,6 +75,7 @@ public class ArtistLiveScrapingExtractRepository implements ArtistLiveExtractRep
         Elements liveSectionElements = document
                 .getElementsByClass("schedule hide-for-small-only");
         if (liveSectionElements == null || liveSectionElements.isEmpty()) {
+            log.error("live Parse Failed. link = {}", artistScrapingInfo.getDetailLink());
             return Artist.builder()
                     .artistName(artistScrapingInfo.getArtistName())
                     .build();
@@ -102,7 +98,7 @@ public class ArtistLiveScrapingExtractRepository implements ArtistLiveExtractRep
             String title = liveTitleElement.getElementsByTag("a").get(0).text();
 
             Element liveListElement = pair.getTwo();
-            List<LiveSchedule> liveScheduleList = liveListElement.getElementsByTag("li")
+            List<LiveSchedule> liveScheduleList = liveListElement.getElementsByAttributeValue("itemprop", "event")
                     .stream()
                     .map(this::scrapeLiveSchedule)
                     .filter(Objects::nonNull)
@@ -120,6 +116,7 @@ public class ArtistLiveScrapingExtractRepository implements ArtistLiveExtractRep
     }
 
     private LiveSchedule scrapeLiveSchedule(Element element) {
+        // ライブ日程
         String liveDateString = element
                 .getElementsByAttributeValue("itemprop", "startDate")
                 .get(0)
@@ -132,29 +129,30 @@ public class ArtistLiveScrapingExtractRepository implements ArtistLiveExtractRep
             return null;
         }
 
+        // 会場住所
         Elements locationElements = element.getElementsByClass("hide");
         String livePlace = locationElements
                 .get(0)
                 .getElementsByAttributeValue("itemprop", "name")
                 .attr("content");
 
-        String livePrefectureContent = locationElements
+        // 会場都道府県
+        String prefectureContent = element.getElementsByAttributeValue("itemprop", "url")
                 .get(0)
-                .getElementsByAttributeValue("itemprop", "address")
-                .attr("content");
-
-        Matcher matcher = PREFECTURE_PATTERN.matcher(livePrefectureContent);
+                .text();
+        Matcher matcher = PREFECTURE_PATTERN.matcher(prefectureContent);
         if (!matcher.find()) {
-            return null;
+            log.error("livePrefecture Parse Failed. livePrefecture = {}", prefectureContent);
+            return LiveSchedule.builder()
+                    .livePrefecture(Prefecture.UNKNOWN)
+                    .livePlace(livePlace)
+                    .liveDate(liveDate)
+                    .build();
         }
 
-        Prefecture livePrefecture = Prefecture.findByLabel(matcher.group(1));
-        if (livePrefecture == null) {
-            return null;
-        }
-
+        Prefecture prefecture = Prefecture.findByLabel(matcher.group(1));
         return LiveSchedule.builder()
-                .livePrefecture(livePrefecture)
+                .livePrefecture(prefecture)
                 .livePlace(livePlace)
                 .liveDate(liveDate)
                 .build();
