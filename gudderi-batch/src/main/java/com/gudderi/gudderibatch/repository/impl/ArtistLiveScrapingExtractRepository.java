@@ -104,7 +104,7 @@ public class ArtistLiveScrapingExtractRepository implements ArtistLiveExtractRep
             Element liveListElement = pair.getTwo();
             List<LiveSchedule> liveScheduleList = liveListElement.getElementsByTag("li")
                     .stream()
-                    .map(this::scrapeLiveDate)
+                    .map(this::scrapeLiveSchedule)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
             return Live.builder()
@@ -119,7 +119,7 @@ public class ArtistLiveScrapingExtractRepository implements ArtistLiveExtractRep
                 .build();
     }
 
-    private LiveSchedule scrapeLiveDate(Element element) {
+    private LiveSchedule scrapeLiveSchedule(Element element) {
         String liveDateString = element
                 .getElementsByAttributeValue("itemprop", "startDate")
                 .get(0)
