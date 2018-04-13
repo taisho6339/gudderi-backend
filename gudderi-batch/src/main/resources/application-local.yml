@@ -8,8 +8,8 @@ logging:
 spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/gudderidb?useUnicode=true&zeroDateTimeBehavior=convertToNull&noAccessToProcedureBodies=true&connectionCollation=utf8mb4_general_ci&dumpQueriesOnException=true
-    username: root
-    password: root
+    username: gudderi
+    password: gudderi
     hikari:
       minimum-idle: 10
       maximum-pool-size: 10

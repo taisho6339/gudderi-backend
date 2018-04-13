@@ -1,40 +1,17 @@
 package com.gudderi.gudderibatch.repository;
 
-import org.springframework.stereotype.Repository;
+import com.gudderi.gudderibatch.domain.Artist;
+import com.gudderi.gudderibatch.domain.Live;
+import com.gudderi.gudderibatch.domain.LiveSchedule;
 
-import java.util.Date;
-import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-/**
- * グループとそれに紐づくライブ情報を取得するRepository
- */
-@Repository
+@Mapper
 public interface ArtistLiveRepository {
+    int insertArtist(@Param("artist") Artist artist);
 
-    public List<Artist> getArtistLiveList();
+    int insertLive(@Param("artistId") Integer artistId, @Param("live") Live live);
 
-    @AllArgsConstructor
-    @Data
-    class Artist {
-        private String artistName;
-        private List<Live> liveList;
-    }
-
-    @AllArgsConstructor
-    @Data
-    class Live {
-        private String liveName;
-        private List<LiveDate> liveDateList;
-    }
-
-    @AllArgsConstructor
-    @Data
-    class LiveDate {
-        private String livePrefecture;
-        private String livePlace;
-        private Date liveDate;
-    }
+    void insertLiveSchedule(@Param("liveId") Integer liveId, @Param("liveSchedule") LiveSchedule liveSchedule);
 }
