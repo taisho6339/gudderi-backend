@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 10000
   tomcat:
     max-threads: 24
 logging:
@@ -16,7 +16,7 @@ spring:
       connection-timeout: 3000
 mybatis:
   configuration:
-    default-scripting-language: com.gudderi.batch.component.mybatis.ExtendLanguageDriver
+    default-scripting-language: com.gudderi.api.component.mybatis.ExtendLanguageDriver
 #security:
 #  oauth2:
 #    client:

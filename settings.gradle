@@ -1,2 +1,2 @@
 rootProject.name = 'gudderi-backend'
-include 'gudderi-batch'
+include 'gudderi-batch', 'gudderi-api'

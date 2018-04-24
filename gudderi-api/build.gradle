@@ -1,0 +1,7 @@
+bootRun {
+    jvmArgs = ["-ea:com.gudderi.api...", "-Xdebug", "-Xrunjdwp:server=y,transport=dt_socket,suspend=n,address=10001"]
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+}
