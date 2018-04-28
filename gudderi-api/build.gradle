@@ -5,5 +5,7 @@ bootRun {
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    compile "org.thymeleaf:thymeleaf-spring5"
+    compile("org.springframework.data:spring-data-commons")
+    compile("org.thymeleaf:thymeleaf-spring5")
+    compile("com.google.code.gson:gson")
 }

@@ -1,15 +1,24 @@
 package com.gudderi.api.domain;
 
-import com.gudderi.api.enums.InformationType;
+import com.gudderi.api.repository.UserInformationRepository;
 
 import java.util.Date;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class UserInformation {
     private int userInformationId;
-    private InformationType informationType;
+    private String title;
+    private String message;
     private boolean readFlag;
     private Date createdAt;
+
+    public UserInformation(UserInformationRepository.UserInformation userInformation, String message) {
+        this.userInformationId = userInformation.getUserInformationId();
+        this.title = userInformation.getInformationType().getTitle();
+        this.message = message;
+        this.readFlag = userInformation.isReadFlag();
+        this.createdAt = userInformation.getCreatedAt();
+    }
 }

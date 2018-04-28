@@ -1,7 +1,9 @@
 package com.gudderi.api.component.configuration;
 
+import com.google.gson.Gson;
 import com.gudderi.api.component.message.MessageTemplate;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.TemplateEngine;
@@ -14,10 +16,10 @@ import java.nio.charset.StandardCharsets;
 @Configuration
 public class MessageTemplateConfiguration {
     @Bean
-    public MessageTemplate messageTemplate() {
+    public MessageTemplate messageTemplate(@Autowired Gson gson) {
         TemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
-        return new MessageTemplate(templateEngine);
+        return new MessageTemplate(templateEngine, gson);
     }
 
     private ClassLoaderTemplateResolver templateResolver() {
