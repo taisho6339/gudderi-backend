@@ -1,5 +1,7 @@
 package com.gudderi.api.component.mybatis;
 
+import com.gudderi.api.component.context.ExecContextHolder;
+
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.parsing.XNode;
@@ -9,6 +11,7 @@ import org.apache.ibatis.session.Configuration;
 import java.util.Date;
 
 public class ExtendLanguageDriver extends XMLLanguageDriver {
+    private static final String ADDITIONAL_PARAM_PROC_ID = "_procId";
     private static final String ADDITIONAL_PARAM_NOW = "_now";
 
     @Override
@@ -32,6 +35,7 @@ public class ExtendLanguageDriver extends XMLLanguageDriver {
             @Override
             public BoundSql getBoundSql(Object parameterObject) {
                 BoundSql boundSql = sqlSource.getBoundSql(parameterObject);
+                boundSql.setAdditionalParameter(ADDITIONAL_PARAM_PROC_ID, ExecContextHolder.get().getProcId());
                 boundSql.setAdditionalParameter(ADDITIONAL_PARAM_NOW, new Date());
                 return boundSql;
             }
