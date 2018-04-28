@@ -14,7 +14,7 @@
           UserInformation
         WHERE
           userId = #{userId}
-        ORDER BY DESC
+        ORDER BY createdAt DESC
         LIMIT #{pageable.pageSize}
         OFFSET #{pageable.offset}
     </select>
