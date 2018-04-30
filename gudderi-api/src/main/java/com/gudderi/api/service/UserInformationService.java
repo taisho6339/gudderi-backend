@@ -1,8 +1,8 @@
 package com.gudderi.api.service;
 
-import com.gudderi.api.component.message.MessageTemplate;
 import com.gudderi.api.domain.UserInformation;
 import com.gudderi.api.repository.UserInformationRepository;
+import com.gudderi.core.component.message.MessageTemplate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

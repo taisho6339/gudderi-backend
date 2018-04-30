@@ -1,6 +1,5 @@
 package com.gudderi.api.controller;
 
-import com.google.gson.Gson;
 import com.gudderi.api.controller.response.UserInformationResponse;
 import com.gudderi.api.domain.UserInformation;
 import com.gudderi.api.service.UserInformationService;

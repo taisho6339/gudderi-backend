@@ -1,6 +1,6 @@
 package com.gudderi.api.repository;
 
-import com.gudderi.api.enums.InformationType;
+import com.gudderi.core.enums.InformationType;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

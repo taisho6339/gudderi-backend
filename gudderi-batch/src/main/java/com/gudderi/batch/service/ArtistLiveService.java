@@ -1,11 +1,11 @@
 package com.gudderi.batch.service;
 
-import com.gudderi.batch.component.Transactor;
 import com.gudderi.batch.domain.Artist;
 import com.gudderi.batch.domain.Live;
 import com.gudderi.batch.domain.LiveSchedule;
 import com.gudderi.batch.repository.ArtistLiveExtractRepository;
 import com.gudderi.batch.repository.ArtistLiveRepository;
+import com.gudderi.core.component.transaction.Transactor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

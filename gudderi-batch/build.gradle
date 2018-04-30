@@ -3,6 +3,6 @@ bootRun {
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
+    compile project(':gudderi-core')
     compile('org.jsoup:jsoup:1.11.2')
 }

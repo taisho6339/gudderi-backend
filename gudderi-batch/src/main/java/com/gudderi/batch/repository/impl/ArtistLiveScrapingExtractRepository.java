@@ -3,9 +3,9 @@ package com.gudderi.batch.repository.impl;
 import com.gudderi.batch.domain.Artist;
 import com.gudderi.batch.domain.Live;
 import com.gudderi.batch.domain.LiveSchedule;
-import com.gudderi.batch.enums.Prefecture;
 import com.gudderi.batch.repository.ArtistLiveExtractRepository;
 import com.gudderi.batch.utils.DomUtils;
+import com.gudderi.core.enums.Prefecture;
 
 import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.factory.Lists;

@@ -1,6 +1,6 @@
 def prjBatch = project(':gudderi-batch')
 def prjApi = project(':gudderi-api')
-def javaProject = [prjBatch, prjApi]
+def appProject = [prjBatch, prjApi]
 
 buildscript {
     ext {
@@ -11,21 +11,26 @@ buildscript {
     repositories {
         mavenCentral()
     }
-
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE")
     }
 }
 
-configure(javaProject) {
+configure(appProject) {
+    apply plugin: 'org.springframework.boot'
+}
+
+allprojects {
+    group = 'com.gudderi'
+    version = '0.0.1-SNAPSHOT'
+
     repositories {
         mavenCentral()
     }
     apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'io.spring.dependency-management'
-    apply plugin: 'org.springframework.boot'
 
     dependencyManagement {
         /**
@@ -40,16 +45,15 @@ configure(javaProject) {
     dependencies {
         compile "org.eclipse.collections:eclipse-collections:${eclipseCollectionVersion}"
         compile "org.apache.commons:commons-lang3"
+        compile "org.springframework.boot:spring-boot-starter-web"
         compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisVersion}"
+        compile "org.springframework.boot:spring-boot-starter-thymeleaf"
+        compile "org.thymeleaf:thymeleaf-spring5"
+        compile "com.google.code.gson:gson"
         runtime "mysql:mysql-connector-java"
 
         annotationProcessor "org.projectlombok:lombok"
         implementation "org.projectlombok:lombok"
         testCompile "org.springframework.boot:spring-boot-starter-test"
     }
-}
-
-allprojects {
-    group = 'com.gudderi'
-    version = '0.0.1-SNAPSHOT'
 }

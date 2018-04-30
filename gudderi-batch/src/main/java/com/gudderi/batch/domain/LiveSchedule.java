@@ -1,6 +1,7 @@
 package com.gudderi.batch.domain;
 
-import com.gudderi.batch.enums.Prefecture;
+
+import com.gudderi.core.enums.Prefecture;
 
 import java.util.Date;
 
