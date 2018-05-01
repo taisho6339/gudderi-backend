@@ -14,5 +14,7 @@ spring:
       minimum-idle: 10
       maximum-pool-size: 10
       connection-timeout: 3000
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 mybatis:
   config-location: "classpath:mybatis-config.xml"
