@@ -18,4 +18,13 @@
         LIMIT #{pageable.pageSize}
         OFFSET #{pageable.offset}
     </select>
+    <select id="countUserInformation"
+            resultType="java.lang.Long">
+        SELECT
+          COUNT(*)
+        FROM
+          UserInformation
+        WHERE
+          userId = #{userId}
+    </select>
 </mapper>

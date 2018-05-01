@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -26,7 +27,11 @@ public class UserInformationRestController {
 
     @GetMapping(path = "/{userId}")
     public UserInformationResponse index(@PathVariable int userId, @PageableDefault(size = 30) Pageable pageable) {
+        long totalCount = userInformationService.getTotalUserInformationCount(userId);
+        if (totalCount <= 0) {
+            return new UserInformationResponse(totalCount, Collections.emptyList());
+        }
         List<UserInformation> userInformationList = userInformationService.getUserInformation(userId, pageable);
-        return new UserInformationResponse(userInformationList);
+        return new UserInformationResponse(totalCount, userInformationList);
     }
 }

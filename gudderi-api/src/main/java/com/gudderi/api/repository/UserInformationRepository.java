@@ -18,6 +18,8 @@ public interface UserInformationRepository {
             @Param("pageable") Pageable pageable
     );
 
+    long countUserInformation(@Param("userId") Integer userId);
+
     @Data
     public class UserInformation {
         private int userInformationId;

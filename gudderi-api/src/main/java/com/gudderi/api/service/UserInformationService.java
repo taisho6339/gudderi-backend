@@ -25,6 +25,10 @@ public class UserInformationService {
         this.messageTemplate = messageTemplate;
     }
 
+    public long getTotalUserInformationCount(int userId) {
+        return userInformationRepository.countUserInformation(userId);
+    }
+
     public List<UserInformation> getUserInformation(int userId, Pageable pageable) {
         List<UserInformationRepository.UserInformation> userInformationList
                 = userInformationRepository.selectUserInformation(userId, pageable);

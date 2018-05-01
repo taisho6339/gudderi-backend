@@ -8,5 +8,6 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class UserInformationResponse {
+    public long totalInformationCount;
     public List<UserInformation> userInformation;
 }
