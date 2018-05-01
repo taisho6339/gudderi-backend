@@ -2,6 +2,7 @@ package com.gudderi.api.service;
 
 import com.gudderi.api.domain.UserInformation;
 import com.gudderi.api.repository.UserInformationRepository;
+import com.gudderi.core.annotation.GudderiTransactional;
 import com.gudderi.core.component.message.MessageTemplate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,11 @@ public class UserInformationService {
     ) {
         this.userInformationRepository = userInformationRepository;
         this.messageTemplate = messageTemplate;
+    }
+
+    @GudderiTransactional
+    public void readInformation(int userId, int informationId) {
+        userInformationRepository.updateReadFlag(userId, informationId);
     }
 
     public long getTotalUserInformationCount(int userId) {

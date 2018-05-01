@@ -27,4 +27,13 @@
         WHERE
           userId = #{userId}
     </select>
+    <update id="updateReadFlag">
+        UPDATE
+          UserInformation
+        SET
+          readFlag = true
+        WHERE
+          userId = #{userId}
+        AND userInformationId = #{userInformationId}
+    </update>
 </mapper>

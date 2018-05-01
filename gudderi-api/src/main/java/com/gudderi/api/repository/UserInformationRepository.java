@@ -20,6 +20,11 @@ public interface UserInformationRepository {
 
     long countUserInformation(@Param("userId") Integer userId);
 
+    void updateReadFlag(
+            @Param("userId") Integer userId,
+            @Param("userInformationId") Integer userInformationId
+    );
+
     @Data
     public class UserInformation {
         private int userInformationId;
