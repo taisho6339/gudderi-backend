@@ -31,6 +31,7 @@ public class UserInformationRestController {
     @GetMapping(path = "/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public UserInformationResponse index(@PathVariable int userId, @PageableDefault(size = 30) Pageable pageable) {
+        //TODO: 認証失敗時エラー
         long totalCount = userInformationService.getTotalUserInformationCount(userId);
         if (totalCount <= 0) {
             return new UserInformationResponse(totalCount, Collections.emptyList());
