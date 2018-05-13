@@ -10,7 +10,7 @@
         FROM
             Artist
         WHERE
-            artistName LIKE '${keyword}%'
-        OR  artistKana LIKE '${keyword}%'
+            artistName LIKE '%${keyword}%'
+        OR  artistNameKana LIKE '%${keyword}%'
     </select>
 </mapper>
