@@ -20,9 +20,6 @@ public class ArtistSearchService {
     }
 
     public List<Artist> searchArtists(String keyword) {
-        if (StringUtils.isBlank(keyword)) {
-            return Collections.emptyList();
-        }
         /*
          * 最初はミニマムに始めるためDB検索で行うが、
          * いずれはElasticsearchに移行させる
