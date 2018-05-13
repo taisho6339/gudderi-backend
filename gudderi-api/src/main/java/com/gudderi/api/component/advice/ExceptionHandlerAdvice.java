@@ -15,14 +15,31 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.Optional;
+
+import lombok.extern.slf4j.Slf4j;
+
 @RestControllerAdvice
+@Slf4j
 public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
         headers.setCacheControl(CacheControl.noStore());
         headers.setPragma("no-cache");
-        return super.handleExceptionInternal(ex, body, headers, status, request);
+
+        // サーバ側のエラーの場合、ログに出力する
+        if (status.is5xxServerError()) {
+            log.error("Internal Server Error", ex);
+        }
+
+        return super.handleExceptionInternal(
+                ex,
+                Optional.ofNullable(body).orElse(ErrorResponse.instanceOf("サーバでエラーが発生しました")),
+                headers,
+                status,
+                request
+        );
     }
 
     /**
