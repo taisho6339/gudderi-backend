@@ -5,8 +5,10 @@ import com.gudderi.api.domain.Artist;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 public class ArtistSearchResponse {
-    private List<Artist> artistList;
+    public long totalCount;
+    public List<Artist> artistList;
 }
