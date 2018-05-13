@@ -14,12 +14,14 @@
     <insert id="insertArtist">
         INSERT INTO Artist (
             artistName,
-            createdAt
+            createdAt,
+            createdBy
         )
         VALUES
         (
             #{artist.artistName},
-            #{_now}
+            #{_now},
+            #{_procId}
         )
         <selectKey resultType="int" keyProperty="artist.artistId" order="AFTER">
             SELECT LAST_INSERT_ID() AS artistId
@@ -40,13 +42,15 @@
         INSERT INTO Live (
             artistId,
             liveName,
-            createdAt
+            createdAt,
+            createdBy
         )
         VALUES
         (
             #{artistId},
             #{live.liveName},
-            #{_now}
+            #{_now},
+            #{_procId}
         )
         <selectKey resultType="int" keyProperty="live.liveId" order="AFTER">
             SELECT LAST_INSERT_ID() AS liveId
@@ -71,7 +75,8 @@
                 livePrefectureCode,
                 livePlace,
                 liveDate,
-                createdAt
+                createdAt,
+                createdBy
             )
             VALUES
             (
@@ -79,7 +84,8 @@
                 #{liveSchedule.livePrefecture.code},
                 #{liveSchedule.livePlace},
                 #{liveSchedule.liveDate},
-                #{_now}
+                #{_now},
+                #{_procId}
             )
     </insert>
 </mapper>
