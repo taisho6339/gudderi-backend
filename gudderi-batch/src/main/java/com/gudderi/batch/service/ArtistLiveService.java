@@ -32,7 +32,7 @@ public class ArtistLiveService {
     /**
      * アーティストの情報も頻繁に変わるので毎回作り直す
      */
-    public void setUpArtistLiveData() {
+    public void createArtistLiveData() {
         List<Artist> artists = artistLiveExtractRepository.getArtistLiveList();
         artists.forEach(artist -> {
             transactor.requiresNew(() -> commitArtistTransaction(artist));
