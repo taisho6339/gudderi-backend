@@ -12,5 +12,6 @@
 
     <typeHandlers>
         <typeHandler handler="com.gudderi.core.component.mybatis.InformationTypeTypeHandler"/>
+        <typeHandler handler="com.gudderi.core.component.mybatis.PrefectureTypeHandler"/>
     </typeHandlers>
 </configuration>
