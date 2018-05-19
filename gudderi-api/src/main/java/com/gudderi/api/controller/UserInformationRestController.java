@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,15 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collections;
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
-@RequestMapping("/api/information")
+@RequestMapping(value = "/api/information", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequiredArgsConstructor
 public class UserInformationRestController {
 
-    private UserInformationService userInformationService;
-
-    public UserInformationRestController(@Autowired UserInformationService userInformationService) {
-        this.userInformationService = userInformationService;
-    }
+    private final UserInformationService userInformationService;
 
     @GetMapping(path = "/{userId}")
     @ResponseStatus(HttpStatus.OK)

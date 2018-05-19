@@ -12,19 +12,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class UserInformationService {
 
-    private UserInformationRepository userInformationRepository;
-    private MessageTemplate messageTemplate;
-
-    public UserInformationService(
-            @Autowired UserInformationRepository userInformationRepository,
-            @Autowired MessageTemplate messageTemplate
-    ) {
-        this.userInformationRepository = userInformationRepository;
-        this.messageTemplate = messageTemplate;
-    }
+    private final UserInformationRepository userInformationRepository;
+    private final MessageTemplate messageTemplate;
 
     @GudderiTransactional
     public void readInformation(int userId, int informationId) {
