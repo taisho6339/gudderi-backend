@@ -5,14 +5,14 @@
     <select id="selectLiveList"
             resultType="com.gudderi.api.domain.Live">
         SELECT
-          LV.artistId,
-          LS.liveScheduleId,
-          LV.liveName,
-          LS.livePlace,
-          LS.livePrefectureCode AS livePrefecture,
-          LS.liveDate
+            LV.artistId,
+            LS.liveScheduleId,
+            LV.liveName,
+            LS.livePlace,
+            LS.livePrefectureCode AS livePrefecture,
+            LS.liveDate
         FROM
-          Live LV
+            Live LV
         LEFT JOIN LiveSchedule LS ON LV.liveId = LS.liveId
         WHERE
             LV.artistId = #{artistId}
@@ -24,11 +24,12 @@
     <select id="countLiveList"
             resultType="java.lang.Long">
         SELECT
-          COUNT(*)
+            COUNT(*)
         FROM
-          Live LV
+            Live LV
         LEFT JOIN LiveSchedule LS ON LV.liveId = LS.liveId
         WHERE
-          LV.artistId = #{artistId}
+            LV.artistId = #{artistId}
+        AND LS.liveDate > #{_now} -- 現在日付より先のものを表示する
     </select>
 </mapper>
