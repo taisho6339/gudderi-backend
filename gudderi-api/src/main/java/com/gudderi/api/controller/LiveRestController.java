@@ -30,9 +30,9 @@ public class LiveRestController {
     public LiveListResponse index(@PathVariable int artistId, @PageableDefault(size = 30) Pageable pageable) {
         long totalCount = liveService.countLiveList(artistId);
         if (totalCount < 0) {
-            return new LiveListResponse(0, Collections.emptyList());
+            return new LiveListResponse(0, 0, Collections.emptyList());
         }
         List<Live> liveList = liveService.getLiveList(artistId, pageable);
-        return new LiveListResponse(totalCount, liveList);
+        return new LiveListResponse(totalCount, pageable.getPageNumber(), liveList);
     }
 }
