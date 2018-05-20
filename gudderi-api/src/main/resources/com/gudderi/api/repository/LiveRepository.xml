@@ -6,7 +6,7 @@
             resultType="com.gudderi.api.domain.Live">
         SELECT
           LV.artistId,
-          LV.liveId,
+          LS.liveScheduleId,
           LV.liveName,
           LS.livePlace,
           LS.livePrefectureCode AS livePrefecture,

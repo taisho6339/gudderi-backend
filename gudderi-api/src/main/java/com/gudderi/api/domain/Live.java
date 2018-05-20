@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class Live {
     private int artistId;
-    private int liveId;
+    private int liveScheduleId;
     private String liveName;
     private String livePlace;
     private Prefecture livePrefecture;
