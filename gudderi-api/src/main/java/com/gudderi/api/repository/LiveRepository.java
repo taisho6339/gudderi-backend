@@ -18,4 +18,14 @@ public interface LiveRepository {
     long countLiveList(
             @Param("artistId") int artistId
     );
+
+    void insertParticipantUser(
+            @Param("userId") int userId,
+            @Param("liveScheduleId") int liveScheduleId
+    );
+
+    boolean existLiveParticipant(
+            @Param("userId") int userId,
+            @Param("liveScheduleId") int liveScheduleId
+    );
 }

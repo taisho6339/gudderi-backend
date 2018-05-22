@@ -32,4 +32,33 @@
             LV.artistId = #{artistId}
         AND LS.liveDate > #{_now} -- 現在日付より先のものを表示する
     </select>
+
+    <select id="existLiveParticipant"
+            resultType="java.lang.Boolean">
+        SELECT EXISTS (
+             SELECT
+                 liveParticipantId
+             FROM
+                 LiveParticipant
+             WHERE
+                 userId = #{userId}
+             AND liveScheduleId = #{liveSchduleId}
+        )
+    </select>
+
+    <insert id="insertParticipantUser">
+        INSERT INTO LiveParticipant (
+          liveScheduleId,
+          userId,
+          createdAt,
+          createdBy
+        )
+        VALUES
+        (
+          #{liveScheduleId},
+          #{userId},
+          #{_now},
+          #{_procId}
+        )
+    </insert>
 </mapper>
